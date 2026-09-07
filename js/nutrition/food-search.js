@@ -9,7 +9,9 @@ export function rankLocalFoods(query,foods,usage={}){
     if(candidates.some(x=>x===q))score+=100;
     if(candidates.some(x=>x.startsWith(q)))score+=50;
     if(candidates.some(x=>x.includes(q)))score+=25;
-    score+=Math.min(20,Number(usage[food.id]||0));
+    if(score > 0){
+  score += Math.min(20, Number(usage[food.id] || 0));
+}
     return {food,score};
   }).filter(x=>x.score>0).sort((a,b)=>b.score-a.score).map(x=>x.food);
 }
