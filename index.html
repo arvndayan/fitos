@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#102218">
+  <title>FitOS</title>
+  <link rel="stylesheet" href="./css/styles.css">
+</head>
+<body>
+<div class="shell">
+  <aside class="side">
+    <div class="brand">FitOS<small>Personal fitness operating system</small></div>
+    <nav class="nav">
+      <button class="nav-btn active" data-view="today">Today</button>
+      <button class="nav-btn" data-view="nutrition">Nutrition</button>
+      <button class="nav-btn" data-view="training">Training</button>
+      <button class="nav-btn" data-view="progress">Progress</button>
+      <button class="nav-btn" data-view="plans">Plans</button>
+      <button class="nav-btn" data-view="coach">AI Coach</button>
+      <button class="nav-btn" data-view="profile">Profile</button>
+    </nav>
+    <div class="profile-mini">
+      <strong id="sideName">Aravind</strong>
+      <small id="sideGoal">Personalized fitness journey</small>
+    </div>
+  </aside>
+
+  <main class="main">
+    <header class="top">
+      <div>
+        <p class="eyebrow" id="dateLabel">TODAY</p>
+        <h1 id="pageTitle">Today</h1>
+      </div>
+      <button class="btn" id="quickAdd">+ Quick add food</button>
+    </header>
+
+    <section class="view active" id="today">
+      <div class="hero">
+        <div>
+          <p class="eyebrow light">YOUR DAILY PLAN</p>
+          <h2>Train smart. Eat to target. Recover.</h2>
+          <p>FitOS automatically tracks nutrition, training and body progress from simple inputs.</p>
+        </div>
+        <div class="readiness"><span>80</span><small>READY</small></div>
+      </div>
+
+      <div class="grid four">
+        <div class="card"><div class="label">Calories</div><div class="value"><span id="todayCalories">0</span><small> / <span id="todayCalTarget">2300</span> kcal</small></div><div class="bar"><div class="fill" id="todayCalBar"></div></div></div>
+        <div class="card"><div class="label">Protein</div><div class="value"><span id="todayProtein">0</span><small> / <span id="todayProteinTarget">170</span> g</small></div><div class="bar"><div class="fill" id="todayProBar"></div></div></div>
+        <div class="card"><div class="label">Weight</div><div class="value"><span id="todayWeight">—</span><small> lb</small></div></div>
+        <div class="card"><div class="label">Steps</div><div class="value"><span id="todaySteps">0</span><small> steps</small></div></div>
+      </div>
+
+      <div class="grid two">
+        <div class="panel">
+          <div class="head"><div><p class="eyebrow">RECENT FOOD</p><h3>Today</h3></div></div>
+          <div id="todayFoodList" class="rows"></div>
+        </div>
+        <div class="panel">
+          <div class="head"><div><p class="eyebrow">WORKOUT</p><h3 id="todayWorkoutName">Push</h3></div></div>
+          <p class="muted">Open Training to log sets, reps, weight and RPE.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="view" id="nutrition">
+      <div class="banner nutrition-bg">
+        <div><p class="eyebrow light">AUTOMATED NUTRITION</p><h2>Tell FitOS what you ate.</h2><p>No manual calorie or macro entry required.</p></div>
+      </div>
+
+      <div class="panel smart-log">
+        <div class="head">
+          <div><p class="eyebrow">SMART FOOD LOG</p><h3>What did you eat?</h3></div>
+        </div>
+        <div class="smart-input-row">
+          <input id="foodText" placeholder='Try "3 eggs breakfast", "150g cooked chicken breast", "1 banana", "2 chapati"'>
+          <select id="mealSelect">
+            <option value="">Auto meal</option>
+            <option>Breakfast</option><option>Lunch</option><option>Dinner</option><option>Snack</option>
+          </select>
+          <button class="btn" id="understandFood">Understand</button>
+        </div>
+        <div id="nutritionStatus" class="note">FitOS will parse food, quantity, unit, meal and preparation automatically.</div>
+        <div id="ambiguityBox" class="ambiguity hidden"></div>
+        <div id="foodMatches" class="results"></div>
+      </div>
+
+      <div class="grid four">
+        <div class="card"><div class="label">Calories</div><div class="value" id="nutCalories">0</div></div>
+        <div class="card"><div class="label">Protein</div><div class="value"><span id="nutProtein">0</span><small> g</small></div></div>
+        <div class="card"><div class="label">Carbs</div><div class="value"><span id="nutCarbs">0</span><small> g</small></div></div>
+        <div class="card"><div class="label">Fat</div><div class="value"><span id="nutFat">0</span><small> g</small></div></div>
+      </div>
+
+      <div class="panel">
+        <div class="head"><div><p class="eyebrow">TODAY'S FOOD</p><h3>Food log</h3></div><button class="ghost" id="clearFood">Clear today</button></div>
+        <div id="foodLog" class="rows"></div>
+      </div>
+    </section>
+
+    <section class="view" id="training">
+      <div class="banner training-bg"><div><p class="eyebrow light">TRAINING</p><h2>Progressive overload, logged simply.</h2></div></div>
+      <div class="toolbar">
+        <label>Program<select id="programSelect"></select></label>
+        <label>Session<select id="sessionSelect"></select></label>
+      </div>
+      <div id="exerciseCards"></div>
+    </section>
+
+    <section class="view" id="progress">
+      <div class="grid two">
+        <div class="panel">
+          <div class="head"><div><p class="eyebrow">BODY WEIGHT</p><h3>Log weight</h3></div></div>
+          <div class="smart-input-row"><input id="weightInput" type="number" step="0.1" placeholder="Weight in lb"><button class="btn" id="logWeight">Save</button></div>
+          <div id="weightList" class="rows"></div>
+        </div>
+        <div class="panel"><p class="eyebrow">TREND</p><h3>7-day average</h3><div class="big-stat" id="avgWeight">—</div></div>
+      </div>
+    </section>
+
+    <section class="view" id="plans">
+      <div class="panel"><p class="eyebrow">PROGRAM LIBRARY</p><h3>Choose your split</h3><div id="planGrid" class="plan-grid"></div></div>
+    </section>
+
+    <section class="view" id="coach">
+      <div class="panel">
+        <p class="eyebrow">FITOS COACH</p><h3>Ask about your data</h3>
+        <div id="coachMessages" class="messages"><div class="bubble ai">Ask me what to eat, how much protein you have left, or what workout is next.</div></div>
+        <div class="chat"><input id="coachInput" placeholder="Ask FitOS..."><button class="btn" id="coachSend">Send</button></div>
+      </div>
+    </section>
+
+    <section class="view" id="profile">
+      <div class="panel">
+        <p class="eyebrow">PERSONALIZATION</p><h3>Your starting targets</h3>
+        <div class="form-grid">
+          <label>Name<input id="profileName"></label>
+          <label>Age<input id="profileAge" type="number"></label>
+          <label>Sex<select id="profileSex"><option value="male">Male</option><option value="female">Female</option></select></label>
+          <label>Height (in)<input id="profileHeight" type="number"></label>
+          <label>Weight (lb)<input id="profileWeight" type="number" step="0.1"></label>
+          <label>Goal<select id="profileGoal"><option value="fat_loss">Fat loss</option><option value="maintain">Maintain / recomp</option><option value="muscle_gain">Muscle gain</option><option value="strength">Strength</option></select></label>
+          <label>Activity<select id="profileActivity"><option value="1.2">Sedentary</option><option value="1.375">Light</option><option value="1.55">Moderate</option><option value="1.725">Very active</option></select></label>
+          <label>Training days<select id="profileDays"><option>3</option><option>4</option><option>5</option><option>6</option></select></label>
+        </div>
+        <button class="btn" id="saveProfile">Calculate & save</button>
+        <div id="profileResults" class="results"></div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<nav class="mobile">
+  <button class="nav-btn active" data-view="today">Today</button>
+  <button class="nav-btn" data-view="nutrition">Food</button>
+  <button class="nav-btn" data-view="training">Train</button>
+  <button class="nav-btn" data-view="progress">Progress</button>
+  <button class="nav-btn" data-view="coach">Coach</button>
+</nav>
+
+<script type="module" src="./js/app.js"></script>
+</body>
+</html>

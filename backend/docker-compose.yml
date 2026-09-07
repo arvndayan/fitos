@@ -1,0 +1,13 @@
+services:
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: fitos
+      POSTGRES_USER: fitos
+      POSTGRES_PASSWORD: fitos
+    ports:
+      - "5432:5432"
+    volumes:
+      - fitos_pg:/var/lib/postgresql/data
+volumes:
+  fitos_pg:
